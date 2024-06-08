@@ -15,7 +15,7 @@ public:
 	
 	void SetMapIndex(const int& Index) { MapIndex = Index; }
 	int GetMapIndex() const { return MapIndex; }
-	int GetMapSize() const { return MapList.size(); }
+	int GetMapSize() const { return static_cast<int>(MapList.size()); }
 
 	Map* GetMap();
 	

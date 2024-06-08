@@ -29,13 +29,19 @@ public:
 	void MoveDown(MapManager* mapManager);
 
 	//Get
+	std::string GetJobName() const { return JobName; }
 	std::string GetName() const { return Name; }
 	int GetHp() const { return Hp; }
 	int GetMp() const { return Mp; }
 	int GetDamage() const { return Damage; }
 	int GetXp() const { return Xp; }
 	int GetLevel() const { return Level; }
+	int GetX() const { return x; }
+	int GetY() const { return y; }
+	bool GetRunFlag() const { return RunFlag; }
 	Monster* GetMonster() const { return monster; }
+
+	void SetName(std::string InName) { Name = InName; }
 
 	friend std::ostream& operator<<(std::ostream& ost, Character* character);
 
@@ -49,11 +55,11 @@ protected:
 
 private:
 	std::string Name;
+	std::string JobName;
 	int MaxHp;
 	int Hp;
 	int Mp;
 	int Damage;
-	int Speed;
 	bool RunFlag;
 
 	int Level;

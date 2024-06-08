@@ -17,12 +17,17 @@ class Map
 {
 public:
 	virtual void EnvironmentVariable() = 0;
+	virtual std::string GetMapName() = 0;
 	virtual ~Map() {}
 };
 
 class GroudMap : public Map
 {
 public:
+	std::string GetMapName()
+	{
+		return "Ground";
+	}
 	virtual void EnvironmentVariable() override
 	{
 		std::cout << "ÇöÀç ¸Ê : Ground" << '\n';
@@ -32,6 +37,10 @@ public:
 class FrozenMap : public Map
 {
 public:
+	std::string GetMapName()
+	{
+		return "Frozen";
+	}
 	virtual void EnvironmentVariable() override
 	{
 		std::cout << "ÇöÀç ¸Ê : Frozen" << '\n';
@@ -41,6 +50,10 @@ public:
 class VolcanoMap : public Map
 {
 public:
+	std::string GetMapName()
+	{
+		return "Volcano";
+	}
 	virtual void EnvironmentVariable() override
 	{
 		std::cout << "ÇöÀç ¸Ê : Volcano" << '\n';

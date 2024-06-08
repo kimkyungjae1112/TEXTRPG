@@ -7,7 +7,8 @@ enum class MType
 {
 	GOBLIN,
 	OAK,
-	BOSS
+	BOSS,
+	END
 };
 
 class MonsterBase

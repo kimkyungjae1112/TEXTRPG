@@ -13,6 +13,7 @@ public:
 	int GetDamage() const { return Damage; }
 	int GetXp() const { return Xp; }
 
+	virtual void InsertDatabase() {}
 	virtual ~MonsterType() {}
 protected:
 	std::string Name;
@@ -23,9 +24,16 @@ protected:
 
 class Goblin : public MonsterType
 {
+	void InsertDatabase() 
+	{
+		Name = "Goblin";
+		Hp = 200;
+		Damage = 10;
+		Xp = 5;
+	}
 	virtual void BaseSetMonster(MType Type) override
 	{
-		Name = "고블린";
+		Name = "Goblin";
 		Hp = 200;
 		Damage = 10;
 		Xp = 5;
@@ -34,9 +42,16 @@ class Goblin : public MonsterType
 
 class Oak : public MonsterType
 {
+	void InsertDatabase()
+	{
+		Name = "Oak";
+		Hp = 350;
+		Damage = 15;
+		Xp = 10;
+	}
 	virtual void BaseSetMonster(MType Type) override
 	{
-		Name = "오크";
+		Name = "Oak";
 		Hp = 350;
 		Damage = 15;
 		Xp = 10;
@@ -45,9 +60,16 @@ class Oak : public MonsterType
 
 class Boss : public MonsterType
 {
+	void InsertDatabase()
+	{
+		Name = "Boss";
+		Hp = 500;
+		Damage = 30;
+		Xp = 20;
+	}
 	virtual void BaseSetMonster(MType Type) override
 	{
-		Name = "보스";
+		Name = "Boss";
 		Hp = 500;
 		Damage = 30;
 		Xp = 20;

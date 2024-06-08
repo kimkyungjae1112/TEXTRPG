@@ -6,7 +6,7 @@
 
 
 Character::Character() : 
-    Name(""), Hp(0), MaxHp(0), Mp(0), Damage(0), RunFlag(true), Level(1), Xp(0), CurrentJob(nullptr)
+    Name(""), JobName(""), Hp(0), MaxHp(0), Mp(0), Damage(0), RunFlag(true), Level(1), Xp(0), CurrentJob(nullptr)
 {
     srand(unsigned int(time(NULL)));
 }
@@ -34,7 +34,7 @@ void Character::BaseSetCharacter(Job job)
 	}
 
     CurrentJob->BaseSetCharacter(job);
-    Name = CurrentJob->GetName();
+    JobName = CurrentJob->GetName();
     Hp = CurrentJob->GetHp();
     MaxHp = Hp;
     Mp = CurrentJob->GetMp();
@@ -86,17 +86,24 @@ void Character::MoveDown(MapManager* mapManager)
 
 void Character::CheckAndMoveToNextMap(MapManager* mapManager)
 {
+    
     if (x >= MaxWidth)
     {
         currentMapIndex++;
         mapManager->SetMapIndex(currentMapIndex);
         Map* nextMap = mapManager->GetMap();
+
+        Context* context = Context::GetContext();
+        context->InsertMapManager();
+        context->InsertManage();
         if (nextMap)
         {
             x = 0;
             y = 0;
             std::cout << '\n' << "************* 다음 맵 이동 *************" << '\n';
             std::cout << "로딩중...";
+            
+            
             Sleep(2000);
         }
         else
@@ -119,7 +126,6 @@ void Character::MeetMonster()
         DetectedMonster(monster);
 
         Context* context = Context::GetContext();
-        std::cout << "몬스터 만났다" << '\n';
     
         context->BattleInterface();
     }
@@ -140,7 +146,10 @@ void Character::MeetBoss()
 
 void Character::LevelUp(const int& InXp)
 {    
+    Context* context = Context::GetContext();
     Xp += InXp;
+    context->InsertPlayerXp();
+
     if ((Level * 5) <= Xp)
     {
         std::cout << "\n\n=========== 레벨업 ===========" << '\n';
@@ -150,10 +159,12 @@ void Character::LevelUp(const int& InXp)
 
         Level++;
         Xp = 0;
-
+        context->InsertPlayerXp();
         Hp = MaxHp + 30;
         Mp = Mp + 30;
         Damage = Damage + 10;
+
+        context->InsertPlayerStat();
         Sleep(2000);
     }
 }
@@ -169,7 +180,7 @@ void Character::Attack()
         << Hp << '\n';
 
     Hp -= monster->GetDamage();
-    std::cout << Name << "의 남은 체력 : " << Hp;
+    std::cout << Name << "의 남은 체력 : " << Hp << '\n';
 
     if (monster->GetHp() <= 0)
     {
@@ -211,7 +222,7 @@ void Character::Run()
             << Hp << '\n';
 
         Hp -= monster->GetDamage();
-        std::cout << Name << "의 남은 체력 : " << Hp;
+        std::cout << Name << "의 남은 체력 : " << Hp << '\n';
     }
 }
 
