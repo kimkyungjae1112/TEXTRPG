@@ -26,6 +26,15 @@ void Context::MakeContext(Character* Player, MapManager* mapManager, MYSQL* conn
 	this->mapManager = mapManager;
 	this->conn = conn;
 
+	mapManager->AddMap(Region::GROUND);
+	InsertMap(Region::GROUND);
+
+	mapManager->AddMap(Region::FROZEN);
+	if (conn) InsertMap(Region::FROZEN);
+
+	mapManager->AddMap(Region::VOLCANO);
+	if (conn) InsertMap(Region::VOLCANO);
+
 	InsertJob(new Beginner);
 	InsertJob(new Warrior);
 	InsertJob(new Wizard);
@@ -69,9 +78,9 @@ void Context::ChoiceJob()
 		goto CHOICE;
 	}
 
-	InsertPlayerXp();
+	InsertPlayerXp();	// PlayerXp 데이터 삽입
 	InsertPlayer();  // Player 데이터 삽입
-	InsertPlayerStat();
+	InsertPlayerStat(); // PlayerStat 데이터 삽입
 
 
 	Sleep(3000);
@@ -339,6 +348,35 @@ void Context::InsertManage()
 	else
 	{
 		std::cout << "INSERT Manage 성공" << std::endl;
+	}
+}
+
+void Context::InsertMap(Region region)
+{
+	std::string QueryMap = "";
+	switch (region)
+	{
+	case Region::GROUND:
+		QueryMap = "INSERT INTO Map(MapName, MapAttribute) VALUES ('GROUND', 'gr')";
+		break;
+	case Region::FROZEN:
+		QueryMap = "INSERT INTO Map(MapName, MapAttribute) VALUES ('FROZEN', 'fro')";
+		break;
+	case Region::VOLCANO:
+		QueryMap = "INSERT INTO Map(MapName, MapAttribute) VALUES ('VOLCANO', 'vol')";
+		break;
+	default:
+		std::cout << "알맞지 않은 맵 삽입" << '\n';
+		break;
+	}
+
+	if (mysql_query(conn, QueryMap.c_str()))
+	{
+		std::cerr << "INSERT Map 실패: " << mysql_error(conn) << std::endl;
+	}
+	else
+	{
+		std::cout << "INSERT Map 성공" << std::endl;
 	}
 }
 

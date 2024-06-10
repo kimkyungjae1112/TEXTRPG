@@ -5,36 +5,6 @@
 #include <mysql.h>
 using std::to_string;
 
-void InsertMap(MYSQL* conn, Region region)
-{
-	std::string QueryMap = "";
-	switch (region)
-	{
-	case Region::GROUND:
-		QueryMap = "INSERT INTO Map(MapName, MapAttribute) VALUES ('GROUND', 'gr')";
-		break;
-	case Region::FROZEN:
-		QueryMap = "INSERT INTO Map(MapName, MapAttribute) VALUES ('FROZEN', 'fro')";
-		break;
-	case Region::VOLCANO:
-		QueryMap = "INSERT INTO Map(MapName, MapAttribute) VALUES ('VOLCANO', 'vol')";
-		break;
-	default:
-		std::cout << "알맞지 않은 맵 삽입" << '\n';
-		break;
-	}
-
-	if (mysql_query(conn, QueryMap.c_str()))
-	{
-		std::cerr << "INSERT Map 실패: " << mysql_error(conn) << std::endl;
-	}
-	else
-	{
-		std::cout << "INSERT Map 성공" << std::endl;
-	}
-
-}
-
 int main()
 {
 	MYSQL* conn;
@@ -43,11 +13,8 @@ int main()
 
 	const char* server = "127.0.0.1";
 	const char* user = "root";
-	const char* password = "0000"; // 사용자 비밀번호
+	const char* password = "0000";
 	const char* database = "databaseproject";
-
-	CharacterJob* Cj = new Beginner;
-	std::cout << "캐릭터 직업 : " << Cj->GetName();
 
 	// MySQL 초기화
 	conn = mysql_init(NULL);
@@ -57,20 +24,11 @@ int main()
 	Character* Player = new Character;
 
 	MapManager* Manager = new MapManager;
-	Manager->AddMap(Region::GROUND);
-	if (conn) InsertMap(conn, Region::GROUND);
-
-	Manager->AddMap(Region::FROZEN);
-	if (conn) InsertMap(conn, Region::FROZEN);
-
-	Manager->AddMap(Region::VOLCANO);
-	if (conn) InsertMap(conn, Region::VOLCANO);
 	
 	Context* context = Context::GetContext();
 	context->MakeContext(Player, Manager, conn);
 	context->ChoiceJob();
 	
-
 	while (1)
 	{	 
 		MAIN:
@@ -107,5 +65,6 @@ int main()
 	
 	// MySQL 연결 종료
 	mysql_close(conn);
+
 	return 0;
 }
