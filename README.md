@@ -1,5 +1,6 @@
 # TEXT RPG
 - MySQL 데이터베이스를 통한 저장 기능이 추가된 TEXT RPG 게임입니다.
+- 개발 기간 : 2024.06.01 ~ 2024.06.02
 
 <br>
 
@@ -42,7 +43,7 @@ C++과 MySQL을 연동하여 게임이 진행될 때 저장되어야 할 데이�
 
 ### 플레이 영상
 
-[플레이영상.mp4](https://prod-files-secure.s3.us-west-2.amazonaws.com/7ebf7000-f855-492a-973c-2e002d905ac7/d4993394-2156-4b82-896b-6e9b0919afad/%ED%94%8C%EB%A0%88%EC%9D%B4%EC%98%81%EC%83%81.mp4)
+[플레이영상(GoogleDrive)](https://drive.google.com/file/d/1_iCU7Di1teOo8S_BYWTsntdy1mkBXtOy/view?usp=drive_link)
 
 <br>
 
